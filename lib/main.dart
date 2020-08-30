@@ -11,6 +11,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Helpify',
+      theme: ThemeData(
+        primaryColor: Color(0xFFFFDB15),
+      ),
       initialRoute: "/",
       routes: getRoutesMaterial(),
     );
