@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Color(0xFFFFDB15),
       ),
-      initialRoute: "/",
+      initialRoute: "splash",
       routes: getRoutesMaterial(),
     );
   }
