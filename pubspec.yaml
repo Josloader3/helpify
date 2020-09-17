@@ -25,6 +25,8 @@ dependencies:
     sdk: flutter
   google_nav_bar: ^3.0.0
   line_awesome_icons: ^1.0.4+2
+  http: ^0.12.2
+  rxdart: ^0.24.1
 
 
   # The following adds the Cupertino Icons font to your application.
