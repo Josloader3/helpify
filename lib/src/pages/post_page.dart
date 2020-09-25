@@ -9,19 +9,19 @@ class PostPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Publicacion publicacionData = ModalRoute.of(context).settings.arguments;
 
-
-
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: <Widget>[
-            CabeceraWidget(titulo: "${ publicacionData.titulo }",),
-            _crearCarrusel(),
-            Text("${ publicacionData.descripcion }"),
-            _crearCardOng(context, publicacionData.ong),
-            _crearButton(context, publicacionData),
-          ],
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: <Widget>[
+              CabeceraWidget(titulo: "${ publicacionData.titulo }",),
+              _crearCarrusel(),
+              Text("${ publicacionData.descripcion }"),
+              _crearCardOng(context, publicacionData.ong),
+              _crearButton(context, publicacionData),
+            ],
+          ),
         ),
       ),
       backgroundColor: Color(0xFFB8E2FF),

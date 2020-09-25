@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:helpify/src/bloc/publicaciones_bloc.dart';
+import 'package:helpify/src/bloc/publicaciones_firebase_bloc.dart';
 
 class Provider extends InheritedWidget {
 
@@ -16,6 +17,7 @@ class Provider extends InheritedWidget {
       : super(key: key, child:child);
 
   final _publicacionesBloc = PublicacionesBloc();
+  final publicacionesFirebaseBloc = PublicacionesFirebaseBloc();
 
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) => true;

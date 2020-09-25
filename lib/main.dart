@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
           primaryColor: Color(0xFFFFDB15),
         ),
         debugShowCheckedModeBanner: false,
-        initialRoute: "/",
+        initialRoute: "splash",
         routes: getRoutesMaterial(),
       ),
     );

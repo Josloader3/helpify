@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:helpify/src/pages/choose_role_page.dart';
 import 'dart:async';
-
-import 'package:helpify/src/pages/menu_page.dart';
+import 'package:helpify/src/routes/routes.dart';
 
 
 
@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void _navigateToHome(){
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-            builder: (BuildContext context) => MenuPage()
+            builder: (BuildContext context) => ChooseRole()
         )
     );
   }

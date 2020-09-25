@@ -11,9 +11,6 @@ class Ong {
     this.imgFondo,
     this.loginId,
     this.estado,
-    this.createdAt,
-    this.updatedAt,
-    this.deletedAt,
   });
 
   int id;
@@ -27,15 +24,12 @@ class Ong {
   dynamic imgFondo;
   int loginId;
   int estado;
-  DateTime createdAt;
-  DateTime updatedAt;
-  dynamic deletedAt;
 
   factory Ong.fromJson(Map<String, dynamic> json) => Ong(
     id: json["id"],
     nombre: json["nombre"],
     razonSocial: json["razon_social"],
-    ruc: json["ruc"],
+    ruc: json["ruc"].toString(),
     descripcion: json["descripcion"],
     web: json["web"],
     correo: json["correo"],
@@ -43,9 +37,6 @@ class Ong {
     imgFondo: json["img_fondo"],
     loginId: json["login_id"],
     estado: json["estado"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-    deletedAt: json["deleted_at"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -60,8 +51,5 @@ class Ong {
     "img_fondo": imgFondo,
     "login_id": loginId,
     "estado": estado,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-    "deleted_at": deletedAt,
   };
 }

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:helpify/src/bloc/provider.dart';
 import 'package:helpify/src/bloc/publicaciones_bloc.dart';
+import 'package:helpify/src/bloc/publicaciones_firebase_bloc.dart';
 import 'package:helpify/src/models/publicacion_model.dart';
 
 class FeedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final bloc = Provider.publicacionesBloc(context);
-    bloc.loadPublicaciones();
+    final bloc = Provider.of(context).publicacionesFirebaseBloc;
 
     return Scaffold(
       body: _createListPublicaciones(bloc),
@@ -15,15 +15,15 @@ class FeedPage extends StatelessWidget {
     );
   }
 
-  Widget _createListPublicaciones(PublicacionesBloc publicacionesBloc) {
+  Widget _createListPublicaciones(PublicacionesFirebaseBloc publicacionesFirebaseBloc) {
     return StreamBuilder<List<Publicacion>>(
-      stream: publicacionesBloc.publicacionesStream,
+      stream: publicacionesFirebaseBloc.publicacionesStream,
       builder: (context, snapshot){
         if(snapshot.hasData){
           final publicaciones = snapshot.data;
           return ListView.builder(
               itemCount: publicaciones.length,
-              itemBuilder: (context, index) => _createItem(context, publicaciones[index], publicacionesBloc)
+              itemBuilder: (context, index) => _createItem(context, publicaciones[index], publicacionesFirebaseBloc)
           );
         } else {
           return Center( child:  CircularProgressIndicator());
@@ -36,7 +36,7 @@ class FeedPage extends StatelessWidget {
     return null;
   }
 
-  Widget _createItem(BuildContext context, Publicacion publicacion, PublicacionesBloc publicacionesBloc) {
+  Widget _createItem(BuildContext context, Publicacion publicacion, PublicacionesFirebaseBloc publicacionesFirebaseBloc) {
     return GestureDetector(
       onTap: () => Navigator.pushNamed(context, "post", arguments: publicacion),
       child: Card(

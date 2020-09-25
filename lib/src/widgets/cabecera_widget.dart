@@ -21,7 +21,7 @@ class CabeceraWidget extends StatelessWidget {
           ),
         ),
         Container(
-          width: MediaQuery.of(context).size.width*0.8,
+          width: MediaQuery.of(context).size.width*0.75,
           child: Text(
             titulo,
             textAlign: TextAlign.right,

@@ -35,7 +35,7 @@ class _MenuPageState extends State<MenuPage> {
             child: GestureDetector(
               onTap: (){
                 print("hi");
-                Navigator.pushNamed(context,"registration");
+                Navigator.pushNamed(context,"profile");
               },
               child: CircleAvatar(
                 backgroundImage: NetworkImage(

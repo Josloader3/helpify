@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'ong_model.dart';
 
@@ -27,40 +28,28 @@ class Publicacion {
     this.fechaIni,
     this.fechaFin,
     this.meta,
-    this.ongId,
     this.estado,
-    this.createdAt,
-    this.updatedAt,
-    this.deletedAt,
     this.ong,
   });
 
-  int id;
+  String id;
   String titulo;
   String descripcion;
   String fechaIni;
   String fechaFin;
   int meta;
-  int ongId;
   String estado;
-  DateTime createdAt;
-  DateTime updatedAt;
-  dynamic deletedAt;
   Ong ong;
 
   factory Publicacion.fromJson(Map<String, dynamic> json) => Publicacion(
-    id: json["id"],
+    //id: json["id"].toString(),
     titulo: json["titulo"],
     descripcion: json["descripcion"],
     fechaIni: json["fecha_ini"],
     fechaFin: json["fecha_fin"],
     meta: json["meta"],
-    ongId: json["ong_id"],
-    estado: json["estado"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-    deletedAt: json["deleted_at"],
-    ong: Ong.fromJson(json["ong"]),
+    estado: json["estado"].toString(),
+    ong: Ong.fromJson(HashMap.from(json["ong"])),
   );
 
   Map<String, dynamic> toJson() => {
@@ -70,11 +59,7 @@ class Publicacion {
     "fecha_ini": fechaIni,
     "fecha_fin": fechaFin,
     "meta": meta,
-    "ong_id": ongId,
     "estado": estado,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-    "deleted_at": deletedAt,
     "ong": ong.toJson(),
   };
 }

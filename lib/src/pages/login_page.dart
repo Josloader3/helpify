@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:helpify/src/widgets/cabecera_widget.dart';
 
-class RegistrationONG extends StatelessWidget {
+class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-        body: SafeArea(
-          child: Stack(
-            children: <Widget>[
-              Container(
-                color: Colors.greenAccent,
-                child: SingleChildScrollView(
+        body: Stack(
+          children: <Widget>[
+            Container(
+              color: Color(0xFFFFDB15),
+              height: size.height,
+              child: SingleChildScrollView(
+                child: SafeArea(
                   child: Column(
                     children: <Widget>[
                       CabeceraWidget(titulo: "",),
@@ -47,17 +48,11 @@ class RegistrationONG extends StatelessWidget {
                             ]),
                         child: Column(
                           children: <Widget>[
-                            Text("Registro", style: TextStyle(fontSize: 30)),
+                            Text("Login", style: TextStyle(fontSize: 30)),
                             SizedBox(height: 30.0),
                             _emailTextField(context),
                             SizedBox(height: 30.0),
                             _passwordTextField(context),
-                            SizedBox(height: 30.0),
-                            _nameTextField(context),
-                            SizedBox(height: 30.0),
-                            _LastnameTextField(context),
-                            SizedBox(height: 30.0),
-                            _numberField(context),
                             SizedBox(height: 30.0),
                             _HacerBoton(context),
                           ],
@@ -69,8 +64,8 @@ class RegistrationONG extends StatelessWidget {
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         )
     );
   }
@@ -102,65 +97,19 @@ class RegistrationONG extends StatelessWidget {
     );
   }
 
-
-
-  Widget _nameTextField(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: TextField(
-        keyboardType: TextInputType.text,
-        decoration: InputDecoration(
-          icon: Icon(Icons.account_box),
-          labelText: "Nombre",
-        ),
-      ),
-    );
-  }
-
-
-
-  Widget _LastnameTextField(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: TextField(
-        keyboardType: TextInputType.text,
-        decoration: InputDecoration(
-          icon: Icon(Icons.account_box,
-              color: Colors.transparent
-          ),
-          labelText: "RUC",
-        ),
-      ),
-    );
-  }
-
-
-  Widget _numberField(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: TextField(
-        keyboardType: TextInputType.numberWithOptions(),
-        decoration: InputDecoration(
-          icon: Icon(Icons.phone),
-          labelText: "Teléfono",
-        ),
-      ),
-    );
-  }
-
-
-
   Widget _HacerBoton(BuildContext context) {
     return RaisedButton(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
-        child: Text("Registrar"),
+        child: Text("Iniciar sesión"),
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       //cambiar el color del botón :está feo
-      color: Color(0xFFFFDB15),
+      color: Colors.greenAccent,
       textColor: Colors.black,
-      onPressed: () {},
+      onPressed: () => {
+        Navigator.of(context).pushNamedAndRemoveUntil('menu', (Route<dynamic> route) => false)
+      },
     );
   }
 }
