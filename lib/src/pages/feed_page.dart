@@ -3,6 +3,7 @@ import 'package:helpify/src/bloc/provider.dart';
 import 'package:helpify/src/bloc/publicaciones_bloc.dart';
 import 'package:helpify/src/bloc/publicaciones_firebase_bloc.dart';
 import 'package:helpify/src/models/publicacion_model.dart';
+import 'package:helpify/src/routes/routes.dart';
 
 class FeedPage extends StatelessWidget {
   @override
@@ -15,36 +16,41 @@ class FeedPage extends StatelessWidget {
     );
   }
 
-  Widget _createListPublicaciones(PublicacionesFirebaseBloc publicacionesFirebaseBloc) {
+  Widget _createListPublicaciones(
+      PublicacionesFirebaseBloc publicacionesFirebaseBloc) {
     return StreamBuilder<List<Publicacion>>(
-      stream: publicacionesFirebaseBloc.publicacionesStream,
-      builder: (context, snapshot){
-        if(snapshot.hasData){
-          final publicaciones = snapshot.data;
-          return ListView.builder(
-              itemCount: publicaciones.length,
-              itemBuilder: (context, index) => _createItem(context, publicaciones[index], publicacionesFirebaseBloc)
-          );
-        } else {
-          return Center( child:  CircularProgressIndicator());
-        }
-      }
-    );
+        stream: publicacionesFirebaseBloc.publicacionesStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final publicaciones = snapshot.data;
+            return ListView.builder(
+                itemCount: publicaciones.length,
+                itemBuilder: (context, index) => _createItem(
+                    context, publicaciones[index], publicacionesFirebaseBloc));
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        });
   }
 
   Widget _addButton(BuildContext context) {
-    return null;
+    return FloatingActionButton(
+        //Que el botón solo funcione si entras como ONG
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.pushNamed(context, "campana");
+        });
   }
 
-  Widget _createItem(BuildContext context, Publicacion publicacion, PublicacionesFirebaseBloc publicacionesFirebaseBloc) {
+  Widget _createItem(BuildContext context, Publicacion publicacion,
+      PublicacionesFirebaseBloc publicacionesFirebaseBloc) {
     return GestureDetector(
       onTap: () => Navigator.pushNamed(context, "post", arguments: publicacion),
       child: Card(
         clipBehavior: Clip.antiAlias,
         margin: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0)
-        ),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         child: Column(
           children: <Widget>[
             Container(
