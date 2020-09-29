@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:helpify/src/bloc/provider.dart';
 import 'package:helpify/src/routes/routes.dart';
-import 'package:helpify/src/providers/publicaciones_provider.dart';
+import 'package:helpify/src/shared_prefs/preferencias_usuario.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = PreferenciasUsuario();
+  await prefs.initPrefs();
+
   runApp(MyApp());
 }
 

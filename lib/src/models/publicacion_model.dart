@@ -29,7 +29,7 @@ class Publicacion {
     this.fechaFin,
     this.meta,
     this.estado,
-    this.ong,
+    this.idOng,
   });
 
   String id;
@@ -39,7 +39,7 @@ class Publicacion {
   String fechaFin;
   int meta;
   String estado;
-  Ong ong;
+  String idOng;
 
   factory Publicacion.fromJson(Map<String, dynamic> json) => Publicacion(
     //id: json["id"].toString(),
@@ -49,7 +49,7 @@ class Publicacion {
     fechaFin: json["fecha_fin"],
     meta: json["meta"],
     estado: json["estado"].toString(),
-    ong: Ong.fromJson(HashMap.from(json["ong"])),
+    idOng: json["idOng"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -60,6 +60,6 @@ class Publicacion {
     "fecha_fin": fechaFin,
     "meta": meta,
     "estado": estado,
-    "ong": ong.toJson(),
+    "idOng": idOng,
   };
 }

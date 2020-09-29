@@ -1,7 +1,13 @@
+import 'dart:collection';
+
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:helpify/src/models/ong_model.dart';
+import 'package:helpify/src/models/usuario_model.dart';
 import 'package:helpify/src/pages/choose_role_page.dart';
+import 'package:helpify/src/pages/menu_page.dart';
 import 'dart:async';
-import 'package:helpify/src/routes/routes.dart';
+import 'package:helpify/src/shared_prefs/preferencias_usuario.dart';
 
 
 
@@ -11,6 +17,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final prefs = new PreferenciasUsuario();
 
   @override
   void initState(){
@@ -30,11 +37,38 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _navigateToHome(){
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-            builder: (BuildContext context) => ChooseRole()
-        )
-    );
+    if(prefs.idLogin != ""){
+      final _dbReference = FirebaseDatabase.instance.reference();
+      //BUSCANDO EN USUARIOS
+      _dbReference.child("usuarios").child(prefs.idLogin).onValue.listen((event) {
+        Map<String, dynamic> decodedData = HashMap.from(event.snapshot.value);
+        Usuario usuario = Usuario.fromJson(decodedData);
+        print(usuario);
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+                builder: (BuildContext context) => MenuPage()
+            )
+        );
+      });
+
+      //BUSCNADO EN ONG'S
+      _dbReference.child("ongs").child(prefs.idLogin).onValue.listen((event) {
+        Map<String, dynamic> decodedData = HashMap.from(event.snapshot.value);
+        Ong ong = Ong.fromJson(decodedData);
+        print(ong);
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+                builder: (BuildContext context) => MenuPage()
+            )
+        );
+      });
+    } else {
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+              builder: (BuildContext context) => ChooseRole()
+          )
+      );
+    }
   }
 
   @override

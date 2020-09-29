@@ -11,19 +11,15 @@ class Usuario {
     this.apellidos,
     this.genero,
     this.telefono,
-    this.correo,
     this.imgPerfil,
-    this.loginId,
   });
 
-  int id;
+  String id;
   String nombres;
   String apellidos;
   int genero;
   String telefono;
-  String correo;
   String imgPerfil;
-  int loginId;
 
   factory Usuario.fromJson(Map<String, dynamic> json) => Usuario(
     id: json["id"],
@@ -31,9 +27,7 @@ class Usuario {
     apellidos: json["apellidos"],
     genero: json["genero"],
     telefono: json["telefono"],
-    correo: json["correo"],
     imgPerfil: json["img_perfil"],
-    loginId: json["login_id"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -42,8 +36,6 @@ class Usuario {
     "apellidos": apellidos,
     "genero": genero,
     "telefono": telefono,
-    "correo": correo,
     "img_perfil": imgPerfil,
-    "login_id": loginId,
   };
 }
