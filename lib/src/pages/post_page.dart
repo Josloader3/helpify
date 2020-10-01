@@ -76,8 +76,8 @@ class PostPage extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       color: Color(0xFFFFDB15),
       textColor: Colors.black,
-      onPressed: () => Navigator.pushNamed(
-          context, "tarjetas" /*, arguments: publicacionData*/),
+      onPressed: () =>
+          Navigator.pushNamed(context, "payment", arguments: publicacionData),
     );
   }
 }
