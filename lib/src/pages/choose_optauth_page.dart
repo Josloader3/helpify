@@ -9,12 +9,15 @@ class ChooseOptAuthRole extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Color(0xFFFFDB15),
-      body: SafeArea(
-        child: Padding(
+      body: SingleChildScrollView(
+        child: SafeArea(
+            child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              CabeceraWidget(titulo: (role=="usuario")?"Usuario":"ONG",),
+              CabeceraWidget(
+                titulo: (role == "usuario") ? "Usuario" : "ONG",
+              ),
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
@@ -24,18 +27,23 @@ class ChooseOptAuthRole extends StatelessWidget {
                         color: Colors.black,
                         fontSize: 90.0,
                         fontFamily: "Bukhari",
-                      )
-                  ),
+                      )),
                   SizedBox(height: 1.0, width: double.infinity),
                 ],
               ),
               SizedBox(height: 300),
-              BasicButtonWidget("Ya tengo cuenta", "primary", () => Navigator.pushNamed(context, "login", arguments: role)),
+              BasicButtonWidget("Ya tengo cuenta", "primary",
+                  () => Navigator.pushNamed(context, "login", arguments: role)),
               SizedBox(height: 20),
-              BasicButtonWidget("Deseo registarme", "secondary", () => Navigator.pushNamed(context, (role=="usuario")?"registration":"registration_ong", arguments: "")),
+              BasicButtonWidget(
+                  "Deseo registarme",
+                  "secondary",
+                  () => Navigator.pushNamed(context,
+                      (role == "usuario") ? "registration" : "registration_ong",
+                      arguments: "")),
             ],
           ),
-        )
+        )),
       ),
     );
   }

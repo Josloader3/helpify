@@ -7,7 +7,8 @@ import 'package:line_awesome_icons/line_awesome_icons.dart';
 class PostPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Publicacion publicacionData = ModalRoute.of(context).settings.arguments;
+    final Publicacion publicacionData =
+        ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       body: SafeArea(
@@ -15,9 +16,11 @@ class PostPage extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
-              CabeceraWidget(titulo: "${ publicacionData.titulo }",),
+              CabeceraWidget(
+                titulo: "${publicacionData.titulo}",
+              ),
               _crearCarrusel(),
-              Text("${ publicacionData.descripcion }"),
+              Text("${publicacionData.descripcion}"),
               _crearCardOng(context, publicacionData.ong),
               _crearButton(context, publicacionData),
             ],
@@ -40,9 +43,8 @@ class PostPage extends StatelessWidget {
       child: Card(
         clipBehavior: Clip.antiAlias,
         margin: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0)
-        ),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         child: Column(
           children: <Widget>[
             ListTile(
@@ -52,10 +54,7 @@ class PostPage extends StatelessWidget {
               ),
               title: Text(
                 ong.nombre,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20
-                ),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               subtitle: Text(
                 ong.descripcion,
@@ -70,17 +69,15 @@ class PostPage extends StatelessWidget {
 
   Widget _crearButton(BuildContext context, Publicacion publicacionData) {
     return RaisedButton(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
-          child: Text("Hacer donación"),
-        ),
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0)
-        ),
-        color: Color(0xFFFFDB15),
-        textColor: Colors.black,
-        onPressed: () => Navigator.pushNamed(context, "payment", arguments: publicacionData),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+        child: Text("Hacer donación"),
+      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+      color: Color(0xFFFFDB15),
+      textColor: Colors.black,
+      onPressed: () => Navigator.pushNamed(
+          context, "tarjetas" /*, arguments: publicacionData*/),
     );
   }
-  
 }
