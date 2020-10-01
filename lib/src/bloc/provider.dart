@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:helpify/src/bloc/login_bloc.dart';
 import 'package:helpify/src/bloc/publicaciones_bloc.dart';
 import 'package:helpify/src/bloc/publicaciones_firebase_bloc.dart';
+import 'package:helpify/src/bloc/register_bloc.dart';
+import 'package:helpify/src/bloc/register_ong_bloc.dart';
 
 class Provider extends InheritedWidget {
 
@@ -17,6 +20,9 @@ class Provider extends InheritedWidget {
       : super(key: key, child:child);
 
   final _publicacionesBloc = PublicacionesBloc();
+  final registerBloc = RegisterBloc();
+  final registerOngBloc = RegisterOngBloc();
+  final loginBloc = LoginBloc();
   final publicacionesFirebaseBloc = PublicacionesFirebaseBloc();
 
   @override

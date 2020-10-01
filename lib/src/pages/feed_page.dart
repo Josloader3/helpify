@@ -16,8 +16,7 @@ class FeedPage extends StatelessWidget {
     );
   }
 
-  Widget _createListPublicaciones(
-      PublicacionesFirebaseBloc publicacionesFirebaseBloc) {
+  Widget _createListPublicaciones(PublicacionesFirebaseBloc publicacionesFirebaseBloc) {
     return StreamBuilder<List<Publicacion>>(
         stream: publicacionesFirebaseBloc.publicacionesStream,
         builder: (context, snapshot) {

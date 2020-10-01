@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:helpify/src/bloc/provider.dart';
+import 'package:helpify/src/bloc/publicaciones_firebase_bloc.dart';
 import 'package:helpify/src/models/ong_model.dart';
 import 'package:helpify/src/models/publicacion_model.dart';
 import 'package:helpify/src/widgets/cabecera_widget.dart';
@@ -7,8 +9,9 @@ import 'package:line_awesome_icons/line_awesome_icons.dart';
 class PostPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Publicacion publicacionData =
-        ModalRoute.of(context).settings.arguments;
+    final Publicacion publicacionData = ModalRoute.of(context).settings.arguments;
+    final bloc = Provider.of(context).publicacionesFirebaseBloc;
+    bloc.getOng(publicacionData.idOng);
 
     return Scaffold(
       body: SafeArea(
@@ -20,8 +23,8 @@ class PostPage extends StatelessWidget {
                 titulo: "${publicacionData.titulo}",
               ),
               _crearCarrusel(),
-              Text("${publicacionData.descripcion}"),
-              _crearCardOng(context, publicacionData.ong),
+              Text("${ publicacionData.descripcion }"),
+              _cargarOng(bloc),
               _crearButton(context, publicacionData),
             ],
           ),
@@ -35,6 +38,18 @@ class PostPage extends StatelessWidget {
     return Container(
       height: 200,
     );
+  }
+
+  Widget _cargarOng(PublicacionesFirebaseBloc publicacionesFirebaseBloc){
+    return StreamBuilder<Ong>(
+        stream: publicacionesFirebaseBloc.publicacionStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return _crearCardOng(context, snapshot.data);
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        });
   }
 
   Widget _crearCardOng(BuildContext context, Ong ong) {

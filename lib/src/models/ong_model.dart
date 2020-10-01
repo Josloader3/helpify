@@ -9,20 +9,18 @@ class Ong {
     this.correo,
     this.imgPerfil,
     this.imgFondo,
-    this.loginId,
     this.estado,
   });
 
-  int id;
+  String id;
   String nombre;
   String razonSocial;
   String ruc;
   String descripcion;
   String web;
   String correo;
-  dynamic imgPerfil;
-  dynamic imgFondo;
-  int loginId;
+  String imgPerfil;
+  String imgFondo;
   int estado;
 
   factory Ong.fromJson(Map<String, dynamic> json) => Ong(
@@ -35,7 +33,6 @@ class Ong {
     correo: json["correo"],
     imgPerfil: json["img_perfil"],
     imgFondo: json["img_fondo"],
-    loginId: json["login_id"],
     estado: json["estado"],
   );
 
@@ -49,7 +46,6 @@ class Ong {
     "correo": correo,
     "img_perfil": imgPerfil,
     "img_fondo": imgFondo,
-    "login_id": loginId,
     "estado": estado,
   };
 }

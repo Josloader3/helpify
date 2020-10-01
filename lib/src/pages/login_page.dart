@@ -1,10 +1,27 @@
+import 'dart:collection';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:helpify/src/bloc/login_bloc.dart';
+import 'package:helpify/src/bloc/provider.dart';
+import 'package:helpify/src/shared_prefs/preferencias_usuario.dart';
 import 'package:helpify/src/widgets/cabecera_widget.dart';
 
+final FirebaseAuth _auth = FirebaseAuth.instance;
+
 class LoginPage extends StatelessWidget {
+  final prefs = new PreferenciasUsuario();
+  final fDB = FirebaseDatabase.instance;
+
   @override
   Widget build(BuildContext context) {
+    WidgetsFlutterBinding.ensureInitialized();
+    Firebase.initializeApp();
+
+    final bloc = Provider.of(context).loginBloc;
     final size = MediaQuery.of(context).size;
     return Scaffold(
         body: Stack(
@@ -50,11 +67,11 @@ class LoginPage extends StatelessWidget {
                           children: <Widget>[
                             Text("Login", style: TextStyle(fontSize: 30)),
                             SizedBox(height: 30.0),
-                            _emailTextField(context),
+                            _emailTextField(bloc),
                             SizedBox(height: 30.0),
-                            _passwordTextField(context),
+                            _passwordTextField(bloc),
                             SizedBox(height: 30.0),
-                            _HacerBoton(context),
+                            _HacerBoton(bloc),
                           ],
                         ),
                       ),
@@ -70,46 +87,94 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _emailTextField(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: TextField(
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          icon: Icon(Icons.mail),
-          labelText: "E-mail",
-        ),
-      ),
-    );
-  }
-
-  Widget _passwordTextField(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: TextField(
-        keyboardType: TextInputType.text,
-        obscureText: true,
-        decoration: InputDecoration(
-          icon: Icon(Icons.lock),
-          labelText: "Contraseña",
-        ),
-      ),
-    );
-  }
-
-  Widget _HacerBoton(BuildContext context) {
-    return RaisedButton(
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
-        child: Text("Iniciar sesión"),
-      ),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-      //cambiar el color del botón :está feo
-      color: Colors.greenAccent,
-      textColor: Colors.black,
-      onPressed: () => {
-        Navigator.of(context).pushNamedAndRemoveUntil('menu', (Route<dynamic> route) => false)
+  Widget _emailTextField(LoginBloc bloc) {
+    return StreamBuilder(
+      stream: bloc.emailStream,
+      builder: (context, snapshot){
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: TextField(
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecoration(
+              icon: Icon(Icons.mail),
+              labelText: "E-mail",
+            ),
+            onChanged: bloc.changeEmail,
+          ),
+        );
       },
     );
   }
+
+  Widget _passwordTextField(LoginBloc bloc) {
+    return StreamBuilder(
+      stream: bloc.passwordStream,
+      builder: (context, snapshot){
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: TextField(
+            keyboardType: TextInputType.text,
+            obscureText: true,
+            decoration: InputDecoration(
+              icon: Icon(Icons.lock),
+              labelText: "Contraseña",
+            ),
+            onChanged: bloc.changePassword,
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _HacerBoton(LoginBloc bloc) {
+    return StreamBuilder(
+      stream: bloc.formValidStream,
+      builder: (context, snapshot){
+        return RaisedButton(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+            child: Text("Iniciar sesión"),
+          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          //cambiar el color del botón :está feo
+          color: Colors.greenAccent,
+          textColor: Colors.black,
+          onPressed: () => _loginUsuario(bloc, context),
+        );
+      },
+    );
+  }
+
+  _loginUsuario(LoginBloc bloc, BuildContext context) async {
+    try {
+      User user =
+      (await _auth.signInWithEmailAndPassword(
+          email: bloc.email,
+          password: bloc.password,
+      )).user;
+      if (user != null) {
+        String uID = user.uid;
+        prefs.idLogin = uID;
+        DatabaseReference _publicacionesReference = fDB.reference().child("usuarios").child(uID);
+        _publicacionesReference.onValue.listen((event) {
+          Map<String, dynamic> decodedData = HashMap.from(event.snapshot.value);
+          decodedData.forEach((id, item) {
+            print("=================================");
+            print(id);
+            print(item);
+            print("=================================");
+          });
+        });
+        Navigator.pushReplacementNamed(context, "menu");
+      } else {
+
+      }
+    } catch (e) {
+      print(e);
+      //bloc.email = "";
+      //bloc.password = "";
+      // TODO: AlertDialog with error
+    }
+  }
+
 }
