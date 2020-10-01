@@ -11,7 +11,9 @@ class PaymentPage extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
-              CabeceraWidget(titulo: "Método\nde pago",),
+              CabeceraWidget(
+                titulo: "Método\nde pago",
+              ),
               _crearListaTipoPago(),
               _crearFormMonto(),
               _crearBoton(),

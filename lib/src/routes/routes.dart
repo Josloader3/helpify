@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:helpify/src/pages/MyCardsPage.dart';
+import 'package:helpify/src/pages/cards_page.dart';
 import 'package:helpify/src/pages/choose_optauth_page.dart';
 import 'package:helpify/src/pages/choose_role_page.dart';
 import 'package:helpify/src/pages/create_campaing.dart';
@@ -25,4 +27,6 @@ Map<String, WidgetBuilder> getRoutesMaterial() => {
       "ong": (BuildContext context) => OngPage(),
       "payment": (BuildContext context) => PaymentPage(),
       "campana": (BuildContext context) => campaing(),
+      "tarjetas": (BuildContext context) => CardsPage(),
+      "add_tarjetas": (BuildContext context) => MyCardsPage(),
     };
