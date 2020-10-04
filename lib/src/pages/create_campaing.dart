@@ -1,8 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:helpify/src/models/publicacion_model.dart';
+import 'package:helpify/src/providers/campaing_provider.dart';
+import 'package:helpify/src/shared_prefs/preferencias_usuario.dart';
+import 'package:helpify/src/utils/utils.dart';
 
 class campaing extends StatelessWidget {
-  const campaing({Key key}) : super(key: key);
+  final _formKey = GlobalKey<FormState>();
+  Publicacion _publicacion = new Publicacion();
+
+  final _campaingProvider = new CampaingProvider();
+  final prefs = new PreferenciasUsuario();
 
   @override
   Widget build(BuildContext context) {
@@ -81,14 +89,15 @@ class campaing extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(15.0),
                 child: Form(
+                    key: _formKey,
                     child: Column(
-                  children: <Widget>[
-                    _createName(),
-                    _creategoal(),
-                    _emailTextField(context),
-                    _createButton(),
-                  ],
-                )),
+                      children: <Widget>[
+                        _createName(),
+                        _creategoal(),
+                        _descriptionField(),
+                        _createButton(),
+                      ],
+                    )),
               ),
             ),
           ],
@@ -99,44 +108,83 @@ class campaing extends StatelessWidget {
 
   Widget _creategoal() {
     return TextFormField(
-      keyboardType: TextInputType.number,
+      initialValue: _publicacion.meta.toString(),
+      keyboardType: TextInputType.numberWithOptions(decimal: true),
       decoration: InputDecoration(
         labelText: "Meta(S/.)",
       ),
+      onSaved: (value) => _publicacion.meta = int.parse(value),
+      validator: (value) {
+        if (isNumeric(value)) {
+          return null;
+        } else {
+          return "Solo numeros";
+        }
+      },
     );
   }
 
   Widget _createName() {
     return TextFormField(
+      initialValue: _publicacion.titulo,
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         labelText: "Nombre de la campaña",
       ),
+      onSaved: (value) {
+        _publicacion.titulo = value;
+        _publicacion.idOng = prefs.idLogin;
+      },
+      validator: (value) {
+        if (value.trim().length < 3) {
+          return "Ingrese el nombre de la campaña";
+        } else {
+          return null;
+        }
+      },
     );
   }
-}
 
-Widget _createButton() {
-  return RaisedButton.icon(
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(10.0),
-    ),
-    color: Color(0xFFFFDB15),
-    icon: Icon(Icons.schedule),
-    onPressed: () {},
-    label: Text("Publicar"),
-  );
-}
-
-Widget _emailTextField(BuildContext context) {
-  return Container(
-    padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
-    child: TextField(
-      textCapitalization: TextCapitalization.sentences,
-      decoration: InputDecoration(
-        icon: Icon(Icons.text_fields),
-        labelText: "Descripción",
+  Widget _createButton() {
+    return RaisedButton.icon(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
       ),
-    ),
-  );
+      color: Color(0xFFFFDB15),
+      icon: Icon(Icons.schedule),
+      label: Text("Publicar"),
+      onPressed: _summit,
+    );
+  }
+
+  Widget _descriptionField() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
+      child: TextFormField(
+          textCapitalization: TextCapitalization.sentences,
+          decoration: InputDecoration(
+            icon: Icon(Icons.text_fields),
+            labelText: "Descripción",
+          ),
+          onSaved: (value) => _publicacion.descripcion = value,
+          validator: (value) {
+            if (value.trim().length < 3) {
+              return "Ingrese el descripción de la campaña";
+            } else {
+              return null;
+            }
+          }),
+    );
+  }
+
+  void _summit() {
+    if (!_formKey.currentState.validate()) return;
+
+    _formKey.currentState.save();
+
+    print("Todo Ok");
+    print(_publicacion.idOng);
+
+    _campaingProvider.createCampaing(_publicacion);
+  }
 }

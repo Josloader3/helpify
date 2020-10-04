@@ -107,27 +107,21 @@ class _MyCardsPageState extends State<MyCardsPage>
                           hintText: 'Card Number',
                         ),
                       ),
-                      TextField(
-                        controller: _cardHolderNameController,
-                      ),
+                      _cardHolder(
+                          cardHolderNameController: _cardHolderNameController),
                       Row(
                         children: <Widget>[
                           Expanded(
                             flex: 2,
-                            child: TextField(
-                              controller: _cardExpiryController,
-                            ),
+                            child: _cardExpir(
+                                cardExpiryController: _cardExpiryController),
                           ),
                           SizedBox(width: 16),
                           Expanded(
                             flex: 1,
-                            child: TextField(
-                              focusNode: _cvvFocusNode,
-                              controller: _cvvController,
-                              maxLength: 3,
-                              decoration: InputDecoration(
-                                  counterText: '', hintText: 'CVV'),
-                            ),
+                            child: _insertCVV(
+                                cvvFocusNode: _cvvFocusNode,
+                                cvvController: _cvvController),
                           ),
                         ],
                       ),
@@ -141,4 +135,75 @@ class _MyCardsPageState extends State<MyCardsPage>
       ),
     );
   }
+}
+
+class _cardHolder extends StatelessWidget {
+  const _cardHolder({
+    Key key,
+    @required TextEditingController cardHolderNameController,
+  })  : _cardHolderNameController = cardHolderNameController,
+        super(key: key);
+
+  final TextEditingController _cardHolderNameController;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: _cardHolderNameController,
+    );
+  }
+}
+
+class _cardExpir extends StatelessWidget {
+  const _cardExpir({
+    Key key,
+    @required TextEditingController cardExpiryController,
+  })  : _cardExpiryController = cardExpiryController,
+        super(key: key);
+
+  final TextEditingController _cardExpiryController;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: _cardExpiryController,
+      maxLength: 5,
+    );
+  }
+}
+
+class _insertCVV extends StatelessWidget {
+  const _insertCVV({
+    Key key,
+    @required FocusNode cvvFocusNode,
+    @required TextEditingController cvvController,
+  })  : _cvvFocusNode = cvvFocusNode,
+        _cvvController = cvvController,
+        super(key: key);
+
+  final FocusNode _cvvFocusNode;
+  final TextEditingController _cvvController;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      keyboardType: TextInputType.numberWithOptions(decimal: false),
+      focusNode: _cvvFocusNode,
+      controller: _cvvController,
+      maxLength: 3,
+      decoration: InputDecoration(counterText: '', hintText: 'CVV'),
+    );
+  }
+}
+
+Widget _createButton() {
+  return RaisedButton.icon(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      color: Colors.amber,
+      textColor: Colors.white,
+      icon: Icon(Icons.save),
+      label: Text("Guardar"),
+      onPressed: () {});
 }
