@@ -40,6 +40,12 @@ mixin Validators{
     }
   );
 
+  final validarRuc = StreamTransformer<String, String>.fromHandlers(
+      handleData: (name, sink){
+        sink.add(name);
+      }
+  );
+
   final validarCellphone = StreamTransformer<String, String>.fromHandlers(
       handleData: (cellphone, sink){
         sink.add(cellphone);

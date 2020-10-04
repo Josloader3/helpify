@@ -35,6 +35,7 @@ class _MenuPageState extends State<MenuPage> {
             fontFamily: "Bukhari",
           ),
         ),
+        automaticallyImplyLeading: false,
         centerTitle: true,
         actions: [
           Container(

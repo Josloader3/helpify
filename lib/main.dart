@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:helpify/src/bloc/provider.dart';
-import 'package:helpify/src/providers/publicaciones_provider.dart';
 import 'package:helpify/src/routes/routes.dart';
 import 'package:helpify/src/shared_prefs/preferencias_usuario.dart';
 
@@ -16,8 +15,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    PublicacionesProvider provider = PublicacionesProvider();
-    provider.getPublicaciones();
     return Provider(
       child: MaterialApp(
         title: 'Helpify',

@@ -73,7 +73,7 @@ class RegistrationONG extends StatelessWidget {
                             SizedBox(height: 30.0),
                             _nameTextField(bloc),
                             SizedBox(height: 30.0),
-                            _descripctionTextField(bloc),
+                            _rucTextField(bloc),
                             SizedBox(height: 30.0),
                             _hacerBoton(bloc),
                           ],
@@ -169,19 +169,19 @@ class RegistrationONG extends StatelessWidget {
     );
   }
 
-  Widget _descripctionTextField(RegisterOngBloc bloc) {
+  Widget _rucTextField(RegisterOngBloc bloc) {
     return StreamBuilder(
-      stream: bloc.descriptionStream,
+      stream: bloc.rucStream,
       builder: (context, snapshot){
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: TextField(
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
-              icon: Icon(Icons.account_box),
-              labelText: "Nombre",
+              icon: Icon(Icons.art_track),
+              labelText: "Ruc",
             ),
-            onChanged: bloc.changeDescription,
+            onChanged: bloc.changeRuc,
           ),
         );
       },
@@ -220,7 +220,7 @@ class RegistrationONG extends StatelessWidget {
         Ong ong = new Ong();
         ong.id = uID;
         ong.nombre = bloc.name;
-        ong.descripcion = bloc.description;
+        ong.ruc = bloc.ruc;
 
         fDB.reference().child("ongs").child(uID).set(ong.toJson()).then((onValue) {
           prefs.idLogin = uID;

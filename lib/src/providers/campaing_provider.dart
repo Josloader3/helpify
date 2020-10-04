@@ -4,7 +4,7 @@ import 'package:helpify/src/models/publicacion_model.dart';
 import 'package:http/http.dart' as http;
 
 class CampaingProvider {
-  String _url = "";
+  String _url = "https://helpify-8d65d.firebaseio.com";
   String query = "titulo";
 
   Future<bool> createCampaing(Publicacion publicacion) async {
