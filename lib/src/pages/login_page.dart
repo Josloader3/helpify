@@ -155,15 +155,36 @@ class LoginPage extends StatelessWidget {
       if (user != null) {
         String uID = user.uid;
         prefs.idLogin = uID;
-        DatabaseReference _publicacionesReference = fDB.reference().child("usuarios").child(uID);
+
+        DatabaseReference _publicacionesReference;
+        _publicacionesReference = fDB.reference().child("usuarios").child(uID);
         _publicacionesReference.onValue.listen((event) {
-          Map<String, dynamic> decodedData = HashMap.from(event.snapshot.value);
-          decodedData.forEach((id, item) {
-            print("=================================");
-            print(id);
-            print(item);
-            print("=================================");
-          });
+          if(event.snapshot.value != null){
+            prefs.rol = 1;
+
+            Map<String, dynamic> decodedData = HashMap.from(event.snapshot.value);
+            decodedData.forEach((id, item) {
+              print("=================================");
+              print(id);
+              print(item);
+              print("=================================");
+            });
+          }
+        });
+
+        _publicacionesReference = fDB.reference().child("ongs").child(uID);
+        _publicacionesReference.onValue.listen((event) {
+          if(event.snapshot.value != null){
+            prefs.rol = 2;
+
+            Map<String, dynamic> decodedData = HashMap.from(event.snapshot.value);
+            decodedData.forEach((id, item) {
+              print("=================================");
+              print(id);
+              print(item);
+              print("=================================");
+            });
+          }
         });
         Navigator.pushReplacementNamed(context, "menu");
       } else {

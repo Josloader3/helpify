@@ -20,11 +20,11 @@ class Donacion {
     this.tipoPago
   });
 
-  int id;
-  int publicacionId;
-  int usuarioId;
+  String id;
+  String publicacionId;
+  String usuarioId;
   int tipoPagoId;
-  int monto;
+  String monto;
   Publicacion publicacion;
   Usuario usuario;
   TipoPago tipoPago;
@@ -45,9 +45,6 @@ class Donacion {
     "publicacion_id": publicacionId,
     "usuario_id": usuarioId,
     "tipo_pago_id": tipoPagoId,
-    "monto": monto,
-    "publicacion": publicacion.toJson(),
-    "usuario": usuario.toJson(),
-    "tipo_pago": tipoPago.toJson(),
+    "monto": monto
   };
 }

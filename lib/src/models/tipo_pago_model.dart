@@ -22,22 +22,22 @@ class TipoPago {
   TipoPago({
     this.id,
     this.empresa,
-    this.icono
+    this.logo
   });
 
   int id;
   String empresa;
-  String icono;
+  String logo;
 
   factory TipoPago.fromJson(Map<String, dynamic> json) => TipoPago(
     id: json["id"],
     empresa: json["empresa"],
-    icono: json["icono"],
+    logo: json["logo"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "empresa": empresa,
-    "icono": icono,
+    "logo": logo,
   };
 }

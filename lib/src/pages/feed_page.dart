@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:helpify/src/bloc/provider.dart';
-import 'package:helpify/src/bloc/publicaciones_bloc.dart';
 import 'package:helpify/src/bloc/publicaciones_firebase_bloc.dart';
 import 'package:helpify/src/models/publicacion_model.dart';
-import 'package:helpify/src/routes/routes.dart';
+import 'package:helpify/src/shared_prefs/preferencias_usuario.dart';
 
 class FeedPage extends StatelessWidget {
+  final prefs = new PreferenciasUsuario();
+
   @override
   Widget build(BuildContext context) {
     final bloc = Provider.of(context).publicacionesFirebaseBloc;
@@ -33,12 +34,15 @@ class FeedPage extends StatelessWidget {
   }
 
   Widget _addButton(BuildContext context) {
-    return FloatingActionButton(
+    if(prefs.rol == 2){
+      return FloatingActionButton(
         //Que el botón solo funcione si entras como ONG
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.pushNamed(context, "campana");
-        });
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.pushNamed(context, "campana");
+          });
+    }
+    return null;
   }
 
   Widget _createItem(BuildContext context, Publicacion publicacion,

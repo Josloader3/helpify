@@ -41,26 +41,30 @@ class _SplashScreenState extends State<SplashScreen> {
       final _dbReference = FirebaseDatabase.instance.reference();
       //BUSCANDO EN USUARIOS
       _dbReference.child("usuarios").child(prefs.idLogin).onValue.listen((event) {
-        Map<String, dynamic> decodedData = HashMap.from(event.snapshot.value);
-        Usuario usuario = Usuario.fromJson(decodedData);
-        print(usuario);
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-                builder: (BuildContext context) => MenuPage()
-            )
-        );
+        if(event.snapshot.value != null) {
+          Map<String, dynamic> decodedData = HashMap.from(event.snapshot.value);
+          Usuario usuario = Usuario.fromJson(decodedData);
+          print(usuario);
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                  builder: (BuildContext context) => MenuPage()
+              )
+          );
+        }
       });
 
       //BUSCNADO EN ONG'S
       _dbReference.child("ongs").child(prefs.idLogin).onValue.listen((event) {
-        Map<String, dynamic> decodedData = HashMap.from(event.snapshot.value);
-        Ong ong = Ong.fromJson(decodedData);
-        print(ong);
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-                builder: (BuildContext context) => MenuPage()
-            )
-        );
+        if(event.snapshot.value != null){
+          Map<String, dynamic> decodedData = HashMap.from(event.snapshot.value);
+          Ong ong = Ong.fromJson(decodedData);
+          print(ong);
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                  builder: (BuildContext context) => MenuPage()
+              )
+          );
+        }
       });
     } else {
       Navigator.of(context).pushReplacement(

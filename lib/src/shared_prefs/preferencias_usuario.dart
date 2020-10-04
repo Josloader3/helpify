@@ -22,7 +22,7 @@ class PreferenciasUsuario{
   }
 
   get rol {
-    _prefs.getInt("rol") ?? 0;
+    return _prefs.getInt("rol") ?? 0;
   }
 
   set rol (int value){
