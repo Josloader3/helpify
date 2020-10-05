@@ -33,7 +33,7 @@ class Publicacion {
   String fotoscampaingUrl;
 
   Publicacion({
-    this.id,
+    this.id ,
     this.titulo = "",
     this.descripcion = "",
     this.fechaIni = "",
@@ -41,7 +41,7 @@ class Publicacion {
     this.meta = 0,
     this.estado = 1,
     this.idOng = "",
-    this.fotoscampaingUrl,
+    this.fotoscampaingUrl ,
   });
 
   factory Publicacion.fromJson(Map<String, dynamic> json) => Publicacion(

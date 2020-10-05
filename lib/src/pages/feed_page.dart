@@ -3,6 +3,7 @@ import 'package:helpify/src/bloc/provider.dart';
 import 'package:helpify/src/bloc/publicaciones_firebase_bloc.dart';
 import 'package:helpify/src/models/publicacion_model.dart';
 import 'package:helpify/src/shared_prefs/preferencias_usuario.dart';
+import 'package:helpify/src/utils/images.dart';
 
 class FeedPage extends StatelessWidget {
   final prefs = new PreferenciasUsuario();
@@ -57,11 +58,20 @@ class FeedPage extends StatelessWidget {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         child: Column(
           children: <Widget>[
-            Container(
-              height: 300,
-              child: Text(
-                  "no image") /* Image.network(publicacion.fotoscampaingUrl)*/,
-            ),
+            publicacion.fotoscampaingUrl == null
+                ? Image(
+                    image: AssetImage(MyImages.NO_IMAGE),
+                    height: 300,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  )
+                : FadeInImage(
+                    image: NetworkImage(publicacion.fotoscampaingUrl),
+                    placeholder: AssetImage(MyImages.LOADING),
+                    height: 300,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
             ListTile(
               title: Text(publicacion.titulo),
               subtitle: Text(publicacion.descripcion),

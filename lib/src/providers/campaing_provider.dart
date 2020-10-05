@@ -22,7 +22,7 @@ class CampaingProvider {
 
   Future<String> uploadImage(File image) async {
     final url = Uri.parse(
-        "https://api.cloudinary.com/v1_1/dntttfahc/:image/upload_preset=o0plgpxa");
+        "https://api.cloudinary.com/v1_1/dntttfahc/image/upload?upload_preset=o0plgpxa");
     final mimeType = mime(image.path).split("/"); // image/jpeg
 
     final imageUploadRequest = http.MultipartRequest("POST", url);

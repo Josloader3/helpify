@@ -26,7 +26,7 @@ class PostPage extends StatelessWidget {
                 titulo: "${publicacionData.titulo}",
               ),
               _crearCarrusel(),
-              Text("${ publicacionData.descripcion }"),
+              Text("${publicacionData.descripcion}"),
               _cargarOng(bloc),
               _crearButton(context, publicacionData),
             ],
@@ -75,7 +75,7 @@ class PostPage extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               subtitle: Text(
-                ong.descripcion,
+                ong.ruc,
                 maxLines: 3,
               ),
             ),
