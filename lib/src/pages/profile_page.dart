@@ -43,9 +43,10 @@ class ProfilePage extends StatelessWidget {
               Container(
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Colors.redAccent, Colors.pinkAccent])),
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    //colors: [Colors.redAccent, Colors.pinkAccent]
+                  )),
                   child: Container(
                     width: double.infinity,
                     height: 350.0,
@@ -211,9 +212,10 @@ class ProfilePage extends StatelessWidget {
                     child: Ink(
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                            begin: Alignment.centerRight,
-                            end: Alignment.centerLeft,
-                            colors: [Colors.redAccent, Colors.pinkAccent]),
+                          begin: Alignment.centerRight,
+                          end: Alignment.centerLeft,
+                          //colors: [Colors.redAccent, Colors.pinkAccent]
+                        ),
                         borderRadius: BorderRadius.circular(30.0),
                       ),
                       child: Container(

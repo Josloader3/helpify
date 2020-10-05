@@ -17,7 +17,8 @@ class FeedPage extends StatelessWidget {
     );
   }
 
-  Widget _createListPublicaciones(PublicacionesFirebaseBloc publicacionesFirebaseBloc) {
+  Widget _createListPublicaciones(
+      PublicacionesFirebaseBloc publicacionesFirebaseBloc) {
     return StreamBuilder<List<Publicacion>>(
         stream: publicacionesFirebaseBloc.publicacionesStream,
         builder: (context, snapshot) {
@@ -34,9 +35,9 @@ class FeedPage extends StatelessWidget {
   }
 
   Widget _addButton(BuildContext context) {
-    if(prefs.rol == 2){
+    if (prefs.rol == 2) {
       return FloatingActionButton(
-        //Que el botón solo funcione si entras como ONG
+          //Que el botón solo funcione si entras como ONG
           child: Icon(Icons.add),
           onPressed: () {
             Navigator.pushNamed(context, "campana");
@@ -58,7 +59,8 @@ class FeedPage extends StatelessWidget {
           children: <Widget>[
             Container(
               height: 300,
-              child: Text("No Image"),
+              child: Text(
+                  "no image") /* Image.network(publicacion.fotoscampaingUrl)*/,
             ),
             ListTile(
               title: Text(publicacion.titulo),
