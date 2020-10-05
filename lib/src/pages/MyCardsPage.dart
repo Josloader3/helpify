@@ -55,7 +55,7 @@ class _MyCardsPageState extends State<MyCardsPage>
   void initState() {
     super.initState();
     _flipAnimationController =
-        AnimationController(value: this, duration: Duration(milliseconds: 350));
+        AnimationController(vsync: this, duration: Duration(milliseconds: 350));
     _flipAnimation =
         Tween<double>(begin: 0, end: 1).animate(_flipAnimationController)
           ..addListener(() {
