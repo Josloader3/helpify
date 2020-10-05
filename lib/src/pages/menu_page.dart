@@ -4,7 +4,10 @@ import 'package:helpify/src/pages/feed_page.dart';
 import 'package:helpify/src/pages/inbox_page.dart';
 import 'package:helpify/src/pages/search_page.dart';
 import 'package:helpify/src/pages/settings_page.dart';
+import 'package:helpify/src/shared_prefs/preferencias_usuario.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
+
+final pref = new PreferenciasUsuario();
 
 class MenuPage extends StatefulWidget {
   @override
@@ -42,7 +45,7 @@ class _MenuPageState extends State<MenuPage> {
             padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
             child: GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, "profile");
+                Navigator.pushNamed(context, ((pref.rol == 1)?"profile":"ong"), arguments: ((pref.rol == 1)?pref.usuario:pref.ong));
               },
               child: CircleAvatar(
                 backgroundImage: NetworkImage(

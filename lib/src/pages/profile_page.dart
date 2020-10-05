@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:helpify/src/bloc/perfil_bloc.dart';
 import 'package:helpify/src/bloc/provider.dart';
 import 'package:helpify/src/models/donacion_model.dart';
+import 'package:helpify/src/shared_prefs/preferencias_usuario.dart';
 import 'package:helpify/src/widgets/cabecera_widget.dart';
 
 class ProfilePage extends StatelessWidget {
+  final pref = new PreferenciasUsuario();
+
   @override
   Widget build(BuildContext context) {
     final perfilBloc = Provider.of(context).perfilBloc;
+    perfilBloc.getDonaciones(pref.idLogin);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(

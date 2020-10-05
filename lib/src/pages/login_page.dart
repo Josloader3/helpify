@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:helpify/src/bloc/login_bloc.dart';
 import 'package:helpify/src/bloc/provider.dart';
+import 'package:helpify/src/models/ong_model.dart';
+import 'package:helpify/src/models/usuario_model.dart';
 import 'package:helpify/src/shared_prefs/preferencias_usuario.dart';
 import 'package:helpify/src/widgets/cabecera_widget.dart';
 
@@ -162,13 +164,8 @@ class LoginPage extends StatelessWidget {
           if(event.snapshot.value != null){
             prefs.rol = 1;
 
-            Map<String, dynamic> decodedData = HashMap.from(event.snapshot.value);
-            decodedData.forEach((id, item) {
-              print("=================================");
-              print(id);
-              print(item);
-              print("=================================");
-            });
+            Usuario usuario = Usuario.fromJson(HashMap.from(event.snapshot.value));
+            prefs.usuario = usuario;
           }
         });
 
@@ -177,13 +174,8 @@ class LoginPage extends StatelessWidget {
           if(event.snapshot.value != null){
             prefs.rol = 2;
 
-            Map<String, dynamic> decodedData = HashMap.from(event.snapshot.value);
-            decodedData.forEach((id, item) {
-              print("=================================");
-              print(id);
-              print(item);
-              print("=================================");
-            });
+            Ong ong = Ong.fromJson(HashMap.from(event.snapshot.value));
+            prefs.ong = ong;
           }
         });
         Navigator.pushReplacementNamed(context, "menu");
