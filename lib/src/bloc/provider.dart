@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:helpify/src/bloc/login_bloc.dart';
 import 'package:helpify/src/bloc/payment_bloc.dart';
+import 'package:helpify/src/bloc/perfil_bloc.dart';
 import 'package:helpify/src/bloc/publicaciones_firebase_bloc.dart';
 import 'package:helpify/src/bloc/register_bloc.dart';
 import 'package:helpify/src/bloc/register_ong_bloc.dart';
@@ -25,6 +26,7 @@ class Provider extends InheritedWidget {
   final publicacionesFirebaseBloc = PublicacionesFirebaseBloc();
   final tipoPagoBloc = TipoPagoBloc();
   final paymentBloc = PaymentBloc();
+  final perfilBloc = PerfilBloc();
 
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) => true;

@@ -35,9 +35,9 @@ class Donacion {
     usuarioId: json["usuario_id"],
     tipoPagoId: json["tipo_pago_id"],
     monto: json["monto"],
-    publicacion: Publicacion.fromJson(json["publicacion"]),
+    /*publicacion: Publicacion.fromJson(json["publicacion"]),
     usuario: Usuario.fromJson(json["usuario"]),
-    tipoPago: TipoPago.fromJson(json["tipoPago"]),
+    tipoPago: TipoPago.fromJson(json["tipoPago"]),*/
   );
 
   Map<String, dynamic> toJson() => {

@@ -1,51 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:helpify/src/models/ong_model.dart';
+import 'package:helpify/src/bloc/perfil_bloc.dart';
+import 'package:helpify/src/bloc/provider.dart';
+import 'package:helpify/src/models/donacion_model.dart';
 import 'package:helpify/src/widgets/cabecera_widget.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final perfilBloc = Provider.of(context).perfilBloc;
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.arrow_back),
-                      iconSize: 30.0,
-                      color: Colors.black,
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    Row(
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.camera),
-                          iconSize: 30.0,
-                          color: Colors.black,
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.photo_album),
-                          iconSize: 30.0,
-                          color: Colors.black,
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
               Container(
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Colors.redAccent, Colors.pinkAccent])),
+                  color: Colors.amber,
                   child: Container(
                     width: double.infinity,
                     height: 350.0,
@@ -54,9 +23,12 @@ class ProfilePage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
+                          CabeceraWidget(
+                            titulo: "Perfil",
+                          ),
                           CircleAvatar(
                             backgroundImage: NetworkImage(
-                              "https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg.jpg",
+                              "https://img2.freepng.es/20180920/yko/kisspng-computer-icons-portable-network-graphics-avatar-ic-5ba3c66df14d32.3051789815374598219884.jpg",
                             ),
                             radius: 50.0,
                           ),
@@ -88,9 +60,10 @@ class ProfilePage extends StatelessWidget {
                                     child: Column(
                                       children: <Widget>[
                                         Text(
-                                          "Posts",
+                                          "Campañas\napoyadas",
+                                          textAlign: TextAlign.center,
                                           style: TextStyle(
-                                            color: Colors.redAccent,
+                                            color: Colors.amber,
                                             fontSize: 22.0,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -112,9 +85,10 @@ class ProfilePage extends StatelessWidget {
                                     child: Column(
                                       children: <Widget>[
                                         Text(
-                                          "Followers",
+                                          "Donación\ntotal",
+                                          textAlign: TextAlign.center,
                                           style: TextStyle(
-                                            color: Colors.redAccent,
+                                            color: Colors.amber,
                                             fontSize: 22.0,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -124,30 +98,6 @@ class ProfilePage extends StatelessWidget {
                                         ),
                                         Text(
                                           "28.5K",
-                                          style: TextStyle(
-                                            fontSize: 20.0,
-                                            color: Colors.pinkAccent,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      children: <Widget>[
-                                        Text(
-                                          "Follow",
-                                          style: TextStyle(
-                                            color: Colors.redAccent,
-                                            fontSize: 22.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 5.0,
-                                        ),
-                                        Text(
-                                          "1300",
                                           style: TextStyle(
                                             fontSize: 20.0,
                                             color: Colors.pinkAccent,
@@ -173,65 +123,67 @@ class ProfilePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "Bio:",
+                        "Donaciones:",
                         style: TextStyle(
-                            color: Colors.redAccent,
                             fontStyle: FontStyle.normal,
                             fontSize: 28.0),
                       ),
                       SizedBox(
                         height: 10.0,
                       ),
-                      Text(
-                        'My name is Alice and I am  a freelance mobile app developper.\n'
-                        'if you need any mobile app for your company then contact me for more informations',
-                        style: TextStyle(
-                          fontSize: 22.0,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.black,
-                          letterSpacing: 2.0,
-                        ),
+                      Container(
+                        height: 400.0,
+                          child: _crearListaDonaciones(perfilBloc)
                       ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(
-                height: 20.0,
-              ),
-              Container(
-                width: 300.00,
-                child: RaisedButton(
-                    onPressed: () {},
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(80.0)),
-                    elevation: 0.0,
-                    padding: EdgeInsets.all(0.0),
-                    child: Ink(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.centerRight,
-                            end: Alignment.centerLeft,
-                            colors: [Colors.redAccent, Colors.pinkAccent]),
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      child: Container(
-                        constraints:
-                            BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Contact me",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 26.0,
-                              fontWeight: FontWeight.w300),
-                        ),
-                      ),
-                    )),
-              ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _crearListaDonaciones(PerfilBloc perfilBloc) {
+    return StreamBuilder(
+      stream: perfilBloc.donacionStream,
+      builder: (context, snapshot){
+        if (snapshot.hasData) {
+          final donaciones = snapshot.data;
+          return ListView.builder(
+              itemCount: donaciones.length,
+              itemBuilder: (context, index) => _createItem(
+                  context, donaciones[index]));
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+  }
+
+  _createItem(BuildContext context, Donacion donacion) {
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, "publicacion", arguments: donacion.publicacion),
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+        shape:
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        child: Column(
+          children: <Widget>[
+            ListTile(
+              title: Text(
+                donacion.publicacionId,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+              subtitle: Text(
+                donacion.monto,
+                maxLines: 3,
+              ),
+            ),
+          ],
         ),
       ),
     );
