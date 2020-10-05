@@ -1,57 +1,37 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:helpify/src/models/publicacion_model.dart';
 import 'package:helpify/src/providers/campaing_provider.dart';
 import 'package:helpify/src/shared_prefs/preferencias_usuario.dart';
+import 'package:helpify/src/utils/images.dart';
 import 'package:helpify/src/utils/utils.dart';
+import 'package:image_picker/image_picker.dart';
 
-class campaing extends StatelessWidget {
+class CampaingPage extends StatefulWidget {
+  CampaingPage({Key key}) : super(key: key);
+  @override
+  _CampaingPageState createState() => _CampaingPageState();
+}
+
+class _CampaingPageState extends State<CampaingPage> {
   final _formKey = GlobalKey<FormState>();
   Publicacion _publicacion = new Publicacion();
 
   final _campaingProvider = new CampaingProvider();
   final prefs = new PreferenciasUsuario();
 
+  File _photo;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /*appBar: AppBar(
-        title: Text(
-          "Helpify",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 30.0,
-            fontFamily: "Bukhari",
-          ),
-        ),
-        centerTitle: true,
-      ),*/
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             Stack(
               children: <Widget>[
-                Container(
-                  height: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black26,
-                        offset: Offset(0.0, 2.0),
-                        blurRadius: 6.0,
-                      ),
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30.0),
-                    child: Image(
-                      image: NetworkImage(
-                          'https://image.freepik.com/vector-gratis/concepto-apoyo-ilustracion-personas-voluntarias-planas-pequenas-donacion-tarro-que-recoge-simbolos-corazon-mano-que-da-campana-ayuda-solidaria-sensibilizacion-social-generosa-comunidad-personas-art_126608-604.jpg'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
                 Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 10.0, vertical: 40.0),
@@ -70,13 +50,17 @@ class campaing extends StatelessWidget {
                             icon: Icon(Icons.camera),
                             iconSize: 30.0,
                             color: Colors.black,
-                            onPressed: () => Navigator.pop(context),
+                            onPressed: () {
+                              _processImage(ImageSource.camera);
+                            },
                           ),
                           IconButton(
                             icon: Icon(Icons.photo_album),
                             iconSize: 30.0,
                             color: Colors.black,
-                            onPressed: () => Navigator.pop(context),
+                            onPressed: () {
+                              _processImage(ImageSource.gallery);
+                            },
                           ),
                         ],
                       ),
@@ -87,12 +71,13 @@ class campaing extends StatelessWidget {
             ),
             SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.all(15.0),
+                //padding: EdgeInsets.all(15.0),
                 child: Form(
                     key: _formKey,
                     child: Column(
                       children: <Widget>[
                         _createName(),
+                        _showPhoto(),
                         _creategoal(),
                         _descriptionField(),
                         _createButton(),
@@ -177,14 +162,50 @@ class campaing extends StatelessWidget {
     );
   }
 
-  void _summit() {
+  void _summit() async {
     if (!_formKey.currentState.validate()) return;
 
     _formKey.currentState.save();
 
+    if (_photo != null) {
+      _publicacion.fotoscampaingUrl =
+          await _campaingProvider.uploadImage(_photo);
+    }
+
     print("Todo Ok");
     print(_publicacion.idOng);
 
-    _campaingProvider.createCampaing(_publicacion);
+    if (_publicacion.id == null) {
+      await _campaingProvider.createCampaing(_publicacion);
+    } else {
+      await _campaingProvider.editCampaing(_publicacion);
+    }
+
+    Navigator.pop(context);
+  }
+
+  void _processImage(ImageSource source) async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.getImage(source: source);
+
+    if (_photo != null) {
+      // TODO: Limpiar la url de la foto
+    }
+    setState(() {
+      _photo = File(pickedFile.path);
+    });
+  }
+
+  Widget _showPhoto() {
+    if (_publicacion.fotoscampaingUrl != null) {
+      return Container();
+    } else {
+      return Image(
+        image:
+            _photo != null ? FileImage(_photo) : AssetImage(MyImages.NO_IMAGE),
+        height: 300,
+        fit: BoxFit.cover,
+      );
+    }
   }
 }

@@ -26,7 +26,7 @@ Map<String, WidgetBuilder> getRoutesMaterial() => {
       "post": (BuildContext context) => PostPage(),
       "ong": (BuildContext context) => OngPage(),
       "payment": (BuildContext context) => PaymentPage(),
-      "campana": (BuildContext context) => campaing(),
+      "campana": (BuildContext context) => CampaingPage(),
       "tarjetas": (BuildContext context) => CardsPage(),
       "add_tarjetas": (BuildContext context) => MyCardsPage(),
     };

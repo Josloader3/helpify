@@ -3,6 +3,7 @@ import 'package:helpify/src/bloc/provider.dart';
 import 'package:helpify/src/bloc/publicaciones_firebase_bloc.dart';
 import 'package:helpify/src/models/publicacion_model.dart';
 import 'package:helpify/src/shared_prefs/preferencias_usuario.dart';
+import 'package:helpify/src/utils/images.dart';
 
 class FeedPage extends StatelessWidget {
   final prefs = new PreferenciasUsuario();
@@ -17,7 +18,8 @@ class FeedPage extends StatelessWidget {
     );
   }
 
-  Widget _createListPublicaciones(PublicacionesFirebaseBloc publicacionesFirebaseBloc) {
+  Widget _createListPublicaciones(
+      PublicacionesFirebaseBloc publicacionesFirebaseBloc) {
     return StreamBuilder<List<Publicacion>>(
         stream: publicacionesFirebaseBloc.publicacionesStream,
         builder: (context, snapshot) {
@@ -34,9 +36,9 @@ class FeedPage extends StatelessWidget {
   }
 
   Widget _addButton(BuildContext context) {
-    if(prefs.rol == 2){
+    if (prefs.rol == 2) {
       return FloatingActionButton(
-        //Que el botón solo funcione si entras como ONG
+          //Que el botón solo funcione si entras como ONG
           child: Icon(Icons.add),
           onPressed: () {
             Navigator.pushNamed(context, "campana");
@@ -56,10 +58,20 @@ class FeedPage extends StatelessWidget {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         child: Column(
           children: <Widget>[
-            Container(
-              height: 300,
-              child: Text("No Image"),
-            ),
+            publicacion.fotoscampaingUrl == null
+                ? Image(
+                    image: AssetImage(MyImages.NO_IMAGE),
+                    height: 300,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  )
+                : FadeInImage(
+                    image: NetworkImage(publicacion.fotoscampaingUrl),
+                    placeholder: AssetImage(MyImages.LOADING),
+                    height: 300,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
             ListTile(
               title: Text(publicacion.titulo),
               subtitle: Text(publicacion.descripcion),
